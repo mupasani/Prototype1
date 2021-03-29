@@ -1,0 +1,17 @@
+---
+- hosts: dev
+  tasks:
+    - name: Update apt package manger
+      become: true
+      apt: 
+        update_cache: yes
+    - name: Install java
+      become: true
+      apt:
+        name: "{{ packages }}"
+        state: present
+  vars:
+    packages:
+      - openjdk-8-jdk
+
+    

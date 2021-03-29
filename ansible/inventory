@@ -1,0 +1,2 @@
+[dev]
+ec2-54-162-179-108.compute-1.amazonaws.com ansible_user=ec2-user
