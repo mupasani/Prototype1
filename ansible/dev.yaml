@@ -3,4 +3,20 @@
   become: true
   tasks:
   - name: Enable EPEL
-    command: sudo yum install java-1.8.0-openjdk -y
+    command: yum install java-1.8.0-openjdk -y
+  - name: Download Apache Maven 
+    get_url: url=https://mirrors.estointernet.in/apache/maven/maven-3/3.6.3/binaries/apache-maven-3.6.3-bin.tar.gz dest=/tmp/apache-maven-3.6.3-bin.tar.gz
+  - name: Untar Maven 
+    shell: chdir=/tmp creates=/opt/apache-maven-3.6.3-bin tar -zxf apache-maven-3.6.3-bin.tar.gz -C /opt
+  - name: Add MAVEN to PATH.
+    copy:
+      dest: /home/ec2-user/.bashrc.bkp
+      content: 'PATH=$PATH:/opt/apache-maven-3.6.3-bin'
+  - name: Append MAVEN path
+    lineinfile:
+      path: "/home/ec2-user/.bashrc"
+      line: "export PATH=$PATH:/opt/apache-maven-3.6.3/bin"
+  - name: install git
+    yum:
+     name: git
+     state: latest
