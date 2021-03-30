@@ -9,8 +9,8 @@ pipeline {
                 echo 'Moving to Code Directory'
                 sh 'cd code/prototype1'
                  sh '''
-                    echo "PATH = ${PATH}"
-                    echo "M2_HOME = ${M2_HOME}"
+                    export "PATH=${PATH}:/opt/apache-maven-3.6.3/bin""
+                    export "M2_HOME=/opt/apache-maven-3.6.3/
                 ''' 
             }
         }
