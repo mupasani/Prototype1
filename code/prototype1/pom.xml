@@ -7,6 +7,19 @@
   <version>1.0-SNAPSHOT</version>
   <name>prototype1 Maven Webapp</name>
   <url>http://maven.apache.org</url>
+  <repositories>
+   <repository>
+    <id>jcenter</id>
+    <url>https://jcenter.bintray.com</url>
+  </repository>
+  </repositories>
+   <pluginRepositories>
+        <pluginRepository>
+            <id>jfrog-plugins-release</id>
+            <name>plugins-release</name>
+            <url>https://oss.jfrog.org/artifactory/plugins-release</url>
+        </pluginRepository>
+    </pluginRepositories>
   <dependencies>
     <dependency>
       <groupId>junit</groupId>
@@ -14,8 +27,33 @@
       <version>3.8.1</version>
       <scope>test</scope>
     </dependency>
-  </dependencies>
+      </dependencies>
   <build>
     <finalName>prototype1</finalName>
+    <plugins>
+      <plugin>
+        <groupId>org.jfrog.buildinfo</groupId>
+        <artifactId>artifactory-maven-plugin</artifactId>
+        <version>3.2.1</version>
+        <inherited>false</inherited>
+        <executions>
+          <execution>
+              <id>build-info</id>
+              <goals>
+                <goal>publish</goal>
+              </goals>
+              <configuration>
+                <publisher>
+                  <contextUrl>https://artifactoryops.jfrog.io/artifactory</contextUrl>
+                  <username>$jfrog_username</username>
+                  <password>$jfrog_password</password>
+                  <repoKey>libs-release-local</repoKey>
+                  <snapshotRepoKey>libs-release-snapshot</snapshotRepoKey>
+                </publisher>
+              </configuration>
+          </execution>
+        </executions>
+    </plugin>
+    </plugins>
   </build>
 </project>
