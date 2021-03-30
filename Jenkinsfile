@@ -4,7 +4,7 @@ pipeline {
     stages {
         stages('Pre-Build') {
             steps {
-                echo 'Moving to Code Directory';
+                echo 'Moving to Code Directory'
                 sh 'cd code/prototype1'
             }
         }
