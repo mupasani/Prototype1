@@ -3,5 +3,5 @@
 terraform.tfstate
 terraform.tfstate.backup
 *retry
-code
 test
+*target
