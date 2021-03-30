@@ -2,7 +2,7 @@ pipeline {
     agent any
 
     stages {
-        stages('Pre-Build') {
+        stage('Pre-Build') {
             steps {
                 echo 'Moving to Code Directory'
                 sh 'cd code/prototype1'
