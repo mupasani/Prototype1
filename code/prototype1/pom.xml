@@ -45,8 +45,8 @@
               <configuration>
                 <publisher>
                   <contextUrl>https://artifactoryops.jfrog.io/artifactory</contextUrl>
-                  <username>$jfrog_username</username>
-                  <password>$jfrog_password</password>
+                  <username>${env.JFROG_USERNAME}</username>
+                  <password>${env.JFROG_PASSWORD}</password>
                   <repoKey>libs-release-local</repoKey>
                   <snapshotRepoKey>libs-release-snapshot</snapshotRepoKey>
                 </publisher>
