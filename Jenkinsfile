@@ -27,7 +27,7 @@ pipeline {
         }
         stage('Deploy') {
             steps {
-                echo 'Deploying....'
+                echo 'cd code/prototype1;mvn deploy -Djfrog_username=${JFROG_USERNAME} -Djfrog_password=${JFROG_PASSWORD}'
             }
         }
     }
