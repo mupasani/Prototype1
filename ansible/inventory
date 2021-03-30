@@ -1,2 +1,10 @@
 [dev]
-ec2-18-204-46-132.compute-1.amazonaws.com ansible_user=ec2-user
+ec2-54-164-33-184.compute-1.amazonaws.com ansible_user=ec2-user
+[jenkins-master]
+ec2-54-237-173-100.compute-1.amazonaws.com ansible_user=ec2-user
+[jenkins-slave]
+ec2-3-213-130-127.compute-1.amazonaws.com ansible_user=ec2-user
+[prod]
+ec2-52-205-183-91.compute-1.amazonaws.com ansible_user=ec2-user
+[jfrog]
+ec2-52-204-114-134.compute-1.amazonaws.com ansible_user=ec2-user

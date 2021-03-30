@@ -1,0 +1,29 @@
+---
+ - hosts: jenkins-master 
+   become: true
+   name: Play to install packages required on Jenkins Server
+   gather_facts: no
+   tasks:
+   - name: Import Jenkins Key
+     rpm_key:
+        state: present
+        key: https://pkg.jenkins.io/redhat-stable/jenkins.io.key
+   - name: Install Jenkins
+     yum:
+       name: jenkins
+       state: present
+     tags: jenkins
+   - name: Start & Enable Jenkins
+     systemd: 
+       name: jenkins
+       state: started
+       enabled: true
+   - name: Sleep for 30 seconds and continue with play
+     wait_for: timeout=30
+   - name: Get init password Jenkins
+     shell: cat /var/lib/jenkins/secrets/initialAdminPassword
+     changed_when: false
+     register: result
+   - name: Print init password Jenkins
+     debug:
+       var: result.stdout

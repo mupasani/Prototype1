@@ -1,0 +1,64 @@
+---
+ - hosts: jenkins-master 
+   become: true
+   name: Play to install packages required on Jenkins Server
+   gather_facts: no
+   tasks:
+    - name: Install Java & wget
+      yum:
+        name: 
+          - java-1.8.0-openjdk
+          - wget
+        state: present
+
+    - name: Download Apache Maven 
+      get_url: url=https://mirrors.estointernet.in/apache/maven/maven-3/3.6.3/binaries/apache-maven-3.6.3-bin.tar.gz dest=/tmp/apache-maven-3.6.3-bin.tar.gz
+    
+    - name: Untar Maven 
+      shell: chdir=/tmp creates=/opt/apache-maven-3.6.3-bin tar -zxf apache-maven-3.6.3-bin.tar.gz -C /opt
+
+    - name: Add MAVEN to PATH.
+      copy:
+        dest: /home/ec2-user/.bashrc.bkp
+        content: 'PATH=$PATH:/opt/apache-maven-3.6.3-bin'
+
+    - name: Append MAVEN path
+      lineinfile:
+        path: "/home/ec2-user/.bashrc"
+        line: "export PATH=$PATH:/opt/apache-maven-3.6.3/bin"
+    - name: Creates directory
+      file:
+        path: /etc/yum.repos.d/jenkins.repo.1
+        state: directory
+        owner: ec2-user
+        group: ec2-user
+        mode: 0775
+    - name: Download Jenkins Repo
+      get_url: 
+        url: http://pkg.jenkins-ci.org/redhat-stable/jenkins.repo
+        dest: /etc/yum.repos.d/
+    - name: Import Jenkins Key
+      rpm_key:
+        state: present
+        key: http://pkg.jenkins-ci.org/redhat/jenkins-ci.org.key
+    - name: Install Jenkins
+      yum:
+        name: jenkins
+        state: present
+      tags: jenkins
+    - name: Start & Enable Jenkins
+      systemd: 
+        name: jenkins
+        state: started
+        enabled: true
+    - name: Sleep for 30 seconds and continue with play
+      wait_for: timeout=30
+
+    - name: Get init password Jenkins
+      shell: cat /var/lib/jenkins/secrets/initialAdminPassword
+      changed_when: false
+      register: result
+
+    - name: Print init password Jenkins
+      debug:
+        var: result.stdout
