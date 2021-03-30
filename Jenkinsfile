@@ -28,6 +28,8 @@ pipeline {
         stage('Deploy') {
             steps {
                 echo 'cd code/prototype1;mvn deploy -Djfrog_username=${JFROG_USERNAME} -Djfrog_password=${JFROG_PASSWORD}'
+                echo 'Deploying war file on JFROG repository'
+                sh 'cd code/prototype1;mvn deploy -Djfrog_username=${JFROG_USERNAME} -Djfrog_password=${JFROG_PASSWORD}'
             }
         }
     }
