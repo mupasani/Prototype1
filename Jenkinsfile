@@ -17,6 +17,7 @@ pipeline {
         stage('Build') {
             steps {
                 echo 'Building..'
+                sh 'cd code/prototype1'
                 sh 'mvn clean install'
             }
         }
